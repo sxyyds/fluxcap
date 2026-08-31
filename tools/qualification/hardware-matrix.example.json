@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 2,
+  "generatedUtc": "2026-01-01T00:00:00Z",
+  "requiredCurrentContracts": {
+    "runtimeEvidenceSchemaVersion": 2,
+    "captureManifestSchemaVersion": 3,
+    "l3QualificationResultSchemaVersion": 2,
+    "runtimeCountersScope": "capture_encoder_instance_lifetime_including_warmup"
+  },
+  "semantics": {
+    "rowsContainOnlyPassingRuntimeEvidence": true,
+    "unsupportedObservationsAreQualificationPasses": false,
+    "pendingCoverageIsQualificationFailure": false,
+    "historicalOrPreHardeningL2CanSeedCurrentL3": false,
+    "tupleFieldsAreNotTransferable": true
+  },
+  "os": {
+    "caption": "Microsoft Windows",
+    "version": "10.0.xxxxx",
+    "buildNumber": "xxxxx"
+  },
+  "rows": [
+    {
+      "rowId": "vendor-format-backend-codec-geometry-date",
+      "observedUtc": "2026-01-01T00:00:00Z",
+      "vendor": "Intel|NVIDIA|AMD",
+      "adapter": "GPU model",
+      "adapterLuid": "0x00000000:0x00000000",
+      "pnpDeviceId": "PCI\\VEN_xxxx&DEV_xxxx",
+      "driverVersion": "x.y.z.w",
+      "osBuild": "10.0.xxxxx.x",
+      "evidenceLevel": "L2|L3|L4",
+      "qualificationTuple": {
+        "adapterLuid": "0x00000000:0x00000000",
+        "captureBackend": "wgc|desktop_duplication",
+        "captureTarget": "window|monitor",
+        "outputIdentity": "not_applicable|0:\\\\.\\DISPLAY1:0,0,1920,1080:1920x1080",
+        "rotation": "not_applicable|identity|rotate90|rotate180|rotate270",
+        "transformBackend": "deterministic_planar|video_processor",
+        "format": "NV12|P010",
+        "colorSpace": "YCBCR_STUDIO_G22_LEFT_P709",
+        "hdr10StaticMetadata": false,
+        "captureSurfaceWidth": 1280,
+        "captureSurfaceHeight": 720,
+        "logicalSourceWidth": 1280,
+        "logicalSourceHeight": 720,
+        "sourceX": 320,
+        "sourceY": 40,
+        "sourceWidth": 640,
+        "sourceHeight": 640,
+        "outputWidth": 320,
+        "outputHeight": 320,
+        "codec": "h264|hevc|av1",
+        "encoderInputSubtype": "MFVideoFormat_NV12|MFVideoFormat_P010",
+        "encoderOutputSubtype": "MFVideoFormat_H264|MFVideoFormat_HEVC|MFVideoFormat_AV1",
+        "encoderMftClsid": "{00000000-0000-0000-0000-000000000000}",
+        "encoderMftFriendlyName": "hardware encoder MFT"
+      },
+      "captureSelection": {
+        "outputIndex": null
+      },
+      "resourceCapabilities": {
+        "sourceSrv": true,
+        "busBindFlags": [
+          "RENDER_TARGET",
+          "VIDEO_ENCODER"
+        ],
+        "planeRtvY": true,
+        "planeRtvUv": true
+      },
+      "runtimeEvidence": {
+        "schemaVersion": 2,
+        "evidenceName": "l2_external_texture_identity_and_encoder_bind",
+        "path": "",
+        "sha256": "",
+        "processId": 12345,
+        "executableSha256": "",
+        "qualificationRunNonce": "",
+        "declaredTupleSha256": "",
+        "countersScope": "capture_encoder_instance_lifetime_including_warmup",
+        "counters": {
+          "encoderMatchingTransformCount": 1,
+          "externalSubmissions": 300,
+          "externalIdentityVerifiedSubmissions": 300,
+          "externalVideoEncoderBoundSubmissions": 300,
+          "encoderCopiedSubmissions": 0,
+          "encoderDirectSubmissions": 300,
+          "producerIngressCopySubmissions": 0,
+          "producerIngressTransformSubmissions": 300,
+          "busPublishedFrames": 300,
+          "busCopiedPublishes": 0,
+          "busDirectPublishes": 300,
+          "desktopPresentFrames": 0,
+          "packetCodecMismatches": 0,
+          "fluxcapExplicitCopyFree": true,
+          "measuredConsumerFrames": 240,
+          "measuredSourcePresentations": 240,
+          "measuredDesktopPresentFrames": 0,
+          "measuredDurationMs": 5000,
+          "warmupMs": 1000
+        },
+        "qualificationRunNonceBound": true,
+        "currentContractComplete": true
+      },
+      "l3": {
+        "status": "not-run|insufficient-runtime-l2-evidence|needs-manual-wpa-review|passed|failed-screening",
+        "captureManifestSchemaVersion": 3,
+        "captureManifest": "",
+        "captureManifestSha256": "",
+        "etlSha256": "",
+        "qualificationResultSchemaVersion": 2,
+        "qualificationJson": "",
+        "qualificationJsonSha256": "",
+        "reviewer": "",
+        "reviewedUtc": ""
+      },
+      "l4": {
+        "status": "not-run|passed|failed",
+        "toolOrQualification": "",
+        "observedBoundary": "",
+        "artifact": "",
+        "artifactSha256": ""
+      },
+      "mftInternalCopyObservable": false,
+      "driverPrivateSurfaceCopyObservable": false,
+      "hardwareDmaCopyObservable": false,
+      "notes": ""
+    }
+  ],
+  "unsupportedObservations": [
+    {
+      "observedUtc": "2026-01-01T00:00:00Z",
+      "vendor": "Intel|NVIDIA|AMD",
+      "adapter": "GPU model",
+      "adapterLuid": "0x00000000:0x00000000",
+      "attemptedTuple": {
+        "captureBackend": "wgc|desktop_duplication",
+        "outputIndex": null,
+        "rotation": "not_applicable|identity|rotate90|rotate180|rotate270",
+        "transformBackend": "deterministic_planar|video_processor",
+        "format": "NV12|P010",
+        "codec": "h264|hevc|av1"
+      },
+      "stage": "bus-texture-create|encoder-discovery|capture-output-enumeration|other",
+      "hresult": "0x00000000|not_applicable",
+      "reason": "Exact observed failure; this is not a qualification row.",
+      "mftInternalCopyObservable": false
+    }
+  ],
+  "pendingCoverage": [
+    {
+      "dimension": "vendor|capture-backend|physical-rotation|format-codec|L3|L4",
+      "values": [
+        "exact pending values"
+      ],
+      "blocker": "Required external hardware, privilege, trace tooling, or vendor tooling is unavailable."
+    }
+  ],
+  "globalObservationBoundary": {
+    "mftInternalCopyObservable": false,
+    "driverPrivateSurfaceCopyObservable": false,
+    "hardwareDmaAndCacheObservable": false
+  },
+  "notes": "One row is one exact qualification tuple. Unsupported and pending entries are never implicit passes."
+}

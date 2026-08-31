@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  windows-msvc:
+    name: Windows MSVC x64
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: >
+          cmake -S . -B build
+          -DCMAKE_BUILD_TYPE=Release
+          -DFLUXCAP_BUILD_EXAMPLES=ON
+          -DFLUXCAP_BUILD_BENCHMARKS=OFF
+          -DFLUXCAP_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --config Release --parallel 2
+
+      # Hosted runners have no interactive desktop, no real GPU, and no
+      # D3D11 video processor, so capture/bus/encoder suites are compiled
+      # but not executed here. Pure-logic suites run on every push.
+      - name: Headless test subset
+        run: >
+          ctest --test-dir build -C Release --output-on-failure
+          -R "fluxcap_dirty_tests|fluxcap_c_api_tests|fluxcap_bitstream_metadata_tests|fluxcap_side_data_geometry_tests|fluxcap_desktop_duplication_policy_tests|fluxcap_pipeline_epoch_tests"
+
+      - name: Install smoke test
+        run: |
+          cmake --install build --prefix ${{ github.workspace }}\install
+          Get-ChildItem ${{ github.workspace }}\install
+
+  windows-shared:
+    name: Windows MSVC DLL config
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure shared build
+        run: >
+          cmake -S . -B build-shared
+          -DBUILD_SHARED_LIBS=ON
+          -DCMAKE_BUILD_TYPE=Release
+          -DFLUXCAP_BUILD_BENCHMARKS=OFF
+      - name: Build shared build
+        run: cmake --build build-shared --config Release --parallel 2

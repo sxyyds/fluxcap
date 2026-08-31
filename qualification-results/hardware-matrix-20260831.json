@@ -1,0 +1,132 @@
+﻿{
+    "schemaVersion":  2,
+    "generatedUtc":  "2026-08-31T02:37:37Z",
+    "scope":  "dd-resilience-bus-paths",
+    "semantics":  {
+                      "tupleFieldsAreNotTransferable":  true,
+                      "unsupportedObservationsAreQualificationPasses":  false,
+                      "rowsContainOnlyPassingRuntimeEvidence":  true
+                  },
+    "rows":  [
+                 {
+                     "rowId":  "20260831-nvidia-desktop_duplication_baked_cursor-bgra8-bus",
+                     "observedUtc":  "2026-08-31T02:37:13Z",
+                     "vendor":  "NVIDIA",
+                     "adapterLuid":  "0x00000000:0x000169d9",
+                     "osBuild":  "10.0.26200",
+                     "evidenceLevel":  "L2",
+                     "qualificationTuple":  {
+                                                "captureBackend":  "desktop_duplication_baked_cursor",
+                                                "captureTarget":  "monitor",
+                                                "outputWidth":  320,
+                                                "outputHeight":  320,
+                                                "format":  "BGRA8",
+                                                "colorSpace":  "RGB_FULL_G22_NONE_P709",
+                                                "idleRepublishIntervalMs":  100
+                                            },
+                     "runtimeEvidence":  {
+                                             "schemaVersion":  2,
+                                             "path":  "l2-nvidia-dd-baked-cursor-320-20260831/runtime-l2-evidence.json",
+                                             "sha256":  "f6ec891617d068430ca30577d77746662e883c60a5104e7d32b94c89db392253",
+                                             "executableSha256":  "10379de416698a8a6dfc7fcff8ad4a70aac728bb8deded4adf7672f109bc89d5",
+                                             "gatesPassed":  true,
+                                             "producerIngressCopySubmissions":  4410,
+                                             "busPublishedFrames":  1470,
+                                             "measuredMonotonicViolations":  0
+                                         },
+                     "l3":  {
+                                "status":  "not-run"
+                            }
+                 },
+                 {
+                     "rowId":  "20260831-nvidia-desktop_duplication_controller-bgra8-bus",
+                     "observedUtc":  "2026-08-31T02:37:20Z",
+                     "vendor":  "NVIDIA",
+                     "adapterLuid":  "0x00000000:0x000169d9",
+                     "osBuild":  "10.0.26200",
+                     "evidenceLevel":  "L2",
+                     "qualificationTuple":  {
+                                                "captureBackend":  "desktop_duplication_controller",
+                                                "captureTarget":  "virtual_desktop",
+                                                "outputWidth":  2560,
+                                                "outputHeight":  1600,
+                                                "format":  "BGRA8",
+                                                "colorSpace":  "RGB_FULL_G22_NONE_P709",
+                                                "idleRepublishIntervalMs":  100
+                                            },
+                     "runtimeEvidence":  {
+                                             "schemaVersion":  2,
+                                             "path":  "l2-nvidia-dd-controller-virtual-20260831/runtime-l2-evidence.json",
+                                             "sha256":  "fccdecfdfb32f2ca3c48d435b5c7a5c06fbab97e8015f1d2a55f97d3a1da8588",
+                                             "executableSha256":  "10379de416698a8a6dfc7fcff8ad4a70aac728bb8deded4adf7672f109bc89d5",
+                                             "gatesPassed":  true,
+                                             "producerIngressCopySubmissions":  2932,
+                                             "busPublishedFrames":  1466,
+                                             "measuredMonotonicViolations":  0
+                                         },
+                     "l3":  {
+                                "status":  "not-run"
+                            }
+                 },
+                 {
+                     "rowId":  "20260831-nvidia-desktop_duplication-bgra8-bus",
+                     "observedUtc":  "2026-08-31T02:37:06Z",
+                     "vendor":  "NVIDIA",
+                     "adapterLuid":  "0x00000000:0x000169d9",
+                     "osBuild":  "10.0.26200",
+                     "evidenceLevel":  "L2",
+                     "qualificationTuple":  {
+                                                "captureBackend":  "desktop_duplication",
+                                                "captureTarget":  "monitor",
+                                                "outputWidth":  320,
+                                                "outputHeight":  320,
+                                                "format":  "BGRA8",
+                                                "colorSpace":  "RGB_FULL_G22_NONE_P709",
+                                                "idleRepublishIntervalMs":  100
+                                            },
+                     "runtimeEvidence":  {
+                                             "schemaVersion":  2,
+                                             "path":  "l2-nvidia-dd-identity-320-20260831/runtime-l2-evidence.json",
+                                             "sha256":  "d90078bc3571e14eace2cb4a9aeb07ec84c3357a8af8a790badf097d93d34f8e",
+                                             "executableSha256":  "10379de416698a8a6dfc7fcff8ad4a70aac728bb8deded4adf7672f109bc89d5",
+                                             "gatesPassed":  true,
+                                             "producerIngressCopySubmissions":  2956,
+                                             "busPublishedFrames":  1478,
+                                             "measuredMonotonicViolations":  0
+                                         },
+                     "l3":  {
+                                "status":  "not-run"
+                            }
+                 },
+                 {
+                     "rowId":  "20260831-nvidia-gdi-bgra8-bus",
+                     "observedUtc":  "2026-08-31T02:37:27Z",
+                     "vendor":  "NVIDIA",
+                     "adapterLuid":  "0x00000000:0x000169d9",
+                     "osBuild":  "10.0.26200",
+                     "evidenceLevel":  "L2",
+                     "qualificationTuple":  {
+                                                "captureBackend":  "gdi",
+                                                "captureTarget":  "monitor",
+                                                "outputWidth":  320,
+                                                "outputHeight":  320,
+                                                "format":  "BGRA8",
+                                                "colorSpace":  "RGB_FULL_G22_NONE_P709",
+                                                "idleRepublishIntervalMs":  100
+                                            },
+                     "runtimeEvidence":  {
+                                             "schemaVersion":  2,
+                                             "path":  "l2-nvidia-gdi-320-20260831/runtime-l2-evidence.json",
+                                             "sha256":  "dddb1c634cd99577b83d120202bff6a93035e0450b5de39d71225512a2c2de15",
+                                             "executableSha256":  "10379de416698a8a6dfc7fcff8ad4a70aac728bb8deded4adf7672f109bc89d5",
+                                             "gatesPassed":  true,
+                                             "producerIngressCopySubmissions":  753,
+                                             "busPublishedFrames":  753,
+                                             "measuredMonotonicViolations":  0
+                                         },
+                     "l3":  {
+                                "status":  "not-run"
+                            }
+                 }
+             ]
+}

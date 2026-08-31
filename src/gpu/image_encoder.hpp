@@ -1,0 +1,4 @@
+#ifndef FLUXCAP_GPU_IMAGE_ENCODER_FORWARD_HPP
+#define FLUXCAP_GPU_IMAGE_ENCODER_FORWARD_HPP
+#include <fluxcap/gpu.hpp>
+#endif

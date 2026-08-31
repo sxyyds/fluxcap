@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "capturedUtc": "2026-07-23T07:06:34Z",
+  "status": "runtime-l2-only",
+  "evidenceLevel": 2,
+  "qualificationTuple": {
+    "adapter": "AMD Radeon(TM) 610M",
+    "adapterLuid": "0x00000000:0x0001AC0E",
+    "pnpDeviceId": "PCI\\VEN_1002&DEV_164E&SUBSYS_8E35103C&REV_D8",
+    "driverVersion": "32.0.21039.6001",
+    "osBuild": "10.0.26200",
+    "captureBackend": "wgc",
+    "transformBackend": "deterministic_planar",
+    "format": "NV12",
+    "sourceRegion": "640x640",
+    "output": "320x320",
+    "codec": "h264",
+    "encoderMftFriendlyName": "AMDh264Encoder",
+    "encoderMftClsid": "{adc9bc80-0f41-46c6-ab75-d693d793597d}"
+  },
+  "artifacts": {
+    "executable": {
+      "path": "fluxcap_gpu_wgc_bus_bench.exe",
+      "bytes": 491008,
+      "sha256": "605446F157FBF48AD7CF27EF2B3A5D70E7A02A1ADDA8B10B07297B4602124BBE"
+    },
+    "runtimeEvidence": {
+      "path": "runtime-l2-evidence.json",
+      "bytes": 1134,
+      "sha256": "F93FA0D422E915E2346539D063C2E0EB35F5F752F1F0AFE349597FB41E665850"
+    },
+    "stdout": {
+      "path": "workload.stdout.txt",
+      "bytes": 5728,
+      "sha256": "A2D5D2AD8525D74A680AB11A6982EB6778F1FB177249E9197BC1EFD384AAFFD0"
+    }
+  },
+  "l3": {
+    "status": "not-run",
+    "etl": null,
+    "genericEventsCsv": null,
+    "manualWpaReview": false
+  },
+  "observationBoundary": {
+    "mftInternalCopyObservable": false,
+    "driverPrivateSurfaceObservable": false,
+    "hardwareDmaAndCacheObservable": false
+  }
+}

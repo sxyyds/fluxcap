@@ -1,0 +1,45 @@
+﻿{
+    "schemaVersion":  1,
+    "capturedUtc":  "2026-08-31T02:37:13Z",
+    "status":  "runtime-l2-only",
+    "evidenceLevel":  2,
+    "qualificationTuple":  {
+                               "adapterLuid":  "0x00000000:0x000169d9",
+                               "captureBackend":  "desktop_duplication_baked_cursor",
+                               "captureTarget":  "monitor",
+                               "format":  "BGRA8",
+                               "colorSpace":  "RGB_FULL_G22_NONE_P709",
+                               "output":  "320x320",
+                               "idleRepublishIntervalMs":  100
+                           },
+    "artifacts":  {
+                      "executable":  {
+                                         "path":  "fluxcap_gpu_dd_resilience_bench.exe",
+                                         "bytes":  337408,
+                                         "sha256":  "10379DE416698A8A6DFC7FCFF8AD4A70AAC728BB8DEDED4ADF7672F109BC89D5"
+                                     },
+                      "runtimeEvidence":  {
+                                              "path":  "runtime-l2-evidence.json",
+                                              "bytes":  2044,
+                                              "sha256":  "F6EC891617D068430CA30577D77746662E883C60A5104E7D32B94C89DB392253"
+                                          },
+                      "stdout":  {
+                                     "path":  "workload.stdout.txt",
+                                     "bytes":  1220,
+                                     "sha256":  "15D8BA7A07D10753D17B651042795C338A00B21EC5E487524BE91F24F5E2BDFE"
+                                 }
+                  },
+    "l3":  {
+               "status":  "not-run",
+               "etl":  null,
+               "genericEventsCsv":  null,
+               "manualWpaReview":  false
+           },
+    "observationBoundary":  {
+                                "mftInternalCopyObservable":  false,
+                                "driverPrivateSurfaceObservable":  false,
+                                "hardwareDmaAndCacheObservable":  false
+                            },
+    "workloadExitCode":  0,
+    "gatesPassed":  true
+}

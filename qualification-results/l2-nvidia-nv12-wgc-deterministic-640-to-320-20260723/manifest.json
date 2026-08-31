@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "capturedUtc": "2026-07-23T06:52:04Z",
+  "status": "runtime-l2-only",
+  "evidenceLevel": 2,
+  "qualificationTuple": {
+    "adapter": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "adapterLuid": "0x00000000:0x00018EBE",
+    "pnpDeviceId": "PCI\\VEN_10DE&DEV_2D19&SUBSYS_8E35103C&REV_A1",
+    "driverVersion": "32.0.16.1062",
+    "osBuild": "10.0.26200",
+    "captureBackend": "wgc",
+    "transformBackend": "deterministic_planar",
+    "format": "NV12",
+    "sourceRegion": "640x640",
+    "output": "320x320",
+    "codec": "h264",
+    "encoderMftFriendlyName": "NVIDIA H.264 Encoder MFT",
+    "encoderMftClsid": "{60f44560-5a20-4857-bfef-d29773cb8040}"
+  },
+  "artifacts": {
+    "executable": {
+      "path": "fluxcap_gpu_wgc_bus_bench.exe",
+      "bytes": 489472,
+      "sha256": "82942CFE53054B9265FDCC388D28FE2BED35CACBE28B9C96315B00A98330722B"
+    },
+    "runtimeEvidence": {
+      "path": "runtime-l2-evidence.json",
+      "bytes": 1153,
+      "sha256": "8DCF0EA41266DD8032E4F75C63131988D03477B676956AB5164806A6D132C1AE"
+    },
+    "stdout": {
+      "path": "workload.stdout.txt",
+      "bytes": 5704,
+      "sha256": "FFD474563C3B16FBCCA61110A03A0827FBCF9C761B67EB67E1DC488299C2BC3E"
+    }
+  },
+  "l3": {
+    "status": "not-run",
+    "etl": null,
+    "genericEventsCsv": null,
+    "manualWpaReview": false
+  },
+  "observationBoundary": {
+    "mftInternalCopyObservable": false,
+    "driverPrivateSurfaceObservable": false,
+    "hardwareDmaAndCacheObservable": false
+  }
+}

@@ -1,0 +1,12 @@
+/build*/
+/out/
+/capture.bmp
+*.user
+*.suo
+*.VC.db
+*.obj
+/CMakeFiles/
+/package-install-final/
+/package-consumer-final/
+.vs/
+*.log

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<WindowsPerformanceRecorder
+    Author="FluxCap"
+    Comments="D3D11/DXGI/DxgKrnl/Media Foundation copy qualification"
+    Company="FluxCap"
+    Copyright="FluxCap"
+    Team="FluxCap"
+    Version="1.0">
+  <Profiles>
+    <SystemCollector Id="FluxCapSystemCollector" Name="NT Kernel Logger">
+      <BufferSize Value="256" />
+      <Buffers Value="128" />
+    </SystemCollector>
+    <EventCollector Id="FluxCapEventCollector" Name="FluxCap Copy Qualification">
+      <BufferSize Value="1024" />
+      <Buffers Value="256" />
+    </EventCollector>
+
+    <SystemProvider Id="FluxCapSystemProvider">
+      <Keywords>
+        <Keyword Value="ProcessThread" />
+        <Keyword Value="Loader" />
+        <Keyword Value="CSwitch" />
+      </Keywords>
+    </SystemProvider>
+
+    <EventProvider
+        Id="FluxCapD3D11"
+        Name="DB6F6DDB-AC77-4E88-8253-819DF9BBF140"
+        Level="6"
+        Stack="true">
+      <!-- Include JournalEntries (0x800), not only the 0xf GPU-profile
+           baseline, so Copy* journal candidates are available for review. -->
+      <Keywords><Keyword Value="0xffffffffffffffff" /></Keywords>
+      <CaptureStateOnStart><Keyword Value="0xffffffffffffffff" /></CaptureStateOnStart>
+      <CaptureStateOnSave><Keyword Value="0xffffffffffffffff" /></CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider
+        Id="FluxCapDXGI"
+        Name="CA11C036-0102-4A2D-A6AD-F03CFED5D3C9"
+        Level="6"
+        Stack="true">
+      <Keywords><Keyword Value="0xffffffffffffffff" /></Keywords>
+      <CaptureStateOnStart><Keyword Value="0xffffffffffffffff" /></CaptureStateOnStart>
+      <CaptureStateOnSave><Keyword Value="0xffffffffffffffff" /></CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider
+        Id="FluxCapDxgKrnl"
+        Name="802EC45A-1E99-4B83-9920-87C98277BA9D"
+        Level="5"
+        Stack="true">
+      <!-- 0x277 matches the Windows WPR built-in GPU profile used by WPA's
+           GPU Hardware Queue tables. -->
+      <Keywords><Keyword Value="0x277" /></Keywords>
+      <CaptureStateOnStart><Keyword Value="0x277" /></CaptureStateOnStart>
+      <CaptureStateOnSave><Keyword Value="0x277" /></CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider
+        Id="FluxCapUMD"
+        Name="A688EE40-D8D9-4736-B6F9-6B74935BA3B1"
+        Level="5">
+      <Keywords><Keyword Value="0xffff" /></Keywords>
+      <CaptureStateOnStart><Keyword Value="0xffff" /></CaptureStateOnStart>
+      <CaptureStateOnSave><Keyword Value="0xffff" /></CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider
+        Id="FluxCapMFPerformance"
+        Name="F404B94E-27E0-4384-BFE8-1D8D390B0AA3"
+        Level="5">
+      <Keywords><Keyword Value="0xffffffffffffffff" /></Keywords>
+    </EventProvider>
+    <EventProvider
+        Id="FluxCapMFPerformanceCore"
+        Name="B20E65AC-C905-4014-8F78-1B6A508142EB"
+        Level="5">
+      <Keywords><Keyword Value="0xffffffffffffffff" /></Keywords>
+    </EventProvider>
+    <EventProvider
+        Id="FluxCapMFPlatform"
+        Name="BC97B970-D001-482F-8745-B8D7D5759F99"
+        Level="5">
+      <Keywords><Keyword Value="0xffffffffffffffff" /></Keywords>
+    </EventProvider>
+    <EventProvider
+        Id="FluxCapMFH264Encoder"
+        Name="2A49DE31-8A5B-4D3A-A904-7FC7409AE90D"
+        Level="5">
+      <Keywords><Keyword Value="0xffffffffffffffff" /></Keywords>
+    </EventProvider>
+
+    <Profile
+        Description="FluxCap full-chain copy qualification"
+        DetailLevel="Verbose"
+        Id="FluxCapCopyQualification.Verbose.File"
+        LoggingMode="File"
+        Name="FluxCapCopyQualification">
+      <ProblemCategories>
+        <ProblemCategory Value="First Level Triage" />
+      </ProblemCategories>
+      <Collectors>
+        <SystemCollectorId Value="FluxCapSystemCollector">
+          <SystemProviderId Value="FluxCapSystemProvider" />
+        </SystemCollectorId>
+        <EventCollectorId Value="FluxCapEventCollector">
+          <EventProviders>
+            <EventProviderId Value="FluxCapD3D11" />
+            <EventProviderId Value="FluxCapDXGI" />
+            <EventProviderId Value="FluxCapDxgKrnl" />
+            <EventProviderId Value="FluxCapUMD" />
+            <EventProviderId Value="FluxCapMFPerformance" />
+            <EventProviderId Value="FluxCapMFPerformanceCore" />
+            <EventProviderId Value="FluxCapMFPlatform" />
+            <EventProviderId Value="FluxCapMFH264Encoder" />
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+  </Profiles>
+  <TraceMergeProperties>
+    <TraceMergeProperty Id="FluxCapTraceMerge" Name="FluxCapTraceMerge">
+      <CustomEvents>
+        <CustomEvent Value="ImageId" />
+        <CustomEvent Value="BuildInfo" />
+        <CustomEvent Value="VolumeMapping" />
+        <CustomEvent Value="EventMetadata" />
+        <CustomEvent Value="PerfTrackMetadata" />
+      </CustomEvents>
+    </TraceMergeProperty>
+  </TraceMergeProperties>
+</WindowsPerformanceRecorder>
