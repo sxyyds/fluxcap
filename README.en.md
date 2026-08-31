@@ -1,5 +1,7 @@
 # FluxCap 0.1
 
+[![CI](https://github.com/sxyyds/fluxcap/actions/workflows/ci.yml/badge.svg)](https://github.com/sxyyds/fluxcap/actions/workflows/ci.yml)
+
 [中文文档](README.md) | **English**
 
 Low-latency Windows screen capture as a C++20 library: Windows Graphics

@@ -1,5 +1,7 @@
 # FluxCap 0.1
 
+[![CI](https://github.com/sxyyds/fluxcap/actions/workflows/ci.yml/badge.svg)](https://github.com/sxyyds/fluxcap/actions/workflows/ci.yml)
+
 **中文** | [English](README.en.md)
 
 FluxCap 是面向 Windows 的 C++20 低延迟捕获库。它同时提供两条互补路径：
