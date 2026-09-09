@@ -20,6 +20,41 @@ history before 0.1 was not backfilled into git and will not be rewritten.
 From 0.1 on, the project evolves in small, self-contained commits, with
 release scope recorded in [CHANGELOG.md](CHANGELOG.md).
 
+## 30-second summary
+
+Measured on one laptop: RTX 5060 Laptop / Ryzen 9 8945HX / Windows 11
+(build 26200) / a single 2560x1600 display. Numbers are valid only for
+that tuple; reproduction commands and full distributions are in
+[docs/benchmarks-20260909-rx5060.md](docs/benchmarks-20260909-rx5060.md)
+(Chinese).
+
+| Path | Result |
+|---|---|
+| CPU GDI capture of the full 2560x1600 virtual desktop | 46.7 FPS (P50 21.0 ms), 0.41 cores on average |
+| WGC window capture -> NV12 -> H.264 (1080p-class surface) | submit-to-encoded-packet P50 **1.6 ms**; zero drops at a 240 fps timeline |
+| Same, across H.264/HEVC/AV1 hardware encoders | `encoder copied = 0` everywhere, 600/600 packet coverage |
+| 4K (3840x2160) synthetic transform/encode saturation | BGRA->NV12 5,896 ops/s; single-threaded sequential encode 194 packets/s |
+| CPU usage | all GPU paths above average 1.1 - 1.5 cores (32-core machine) |
+
+**What "zero-copy to the encoder" means here:** on the measured tuple the
+captured texture travels to the hardware encoder with 0 capture-ingress
+copies, 0 bus publish copies, 0 encoder-input copies, and 121/121
+identity-verified direct submissions. That claim is an evidence ladder,
+not a slogan:
+
+| Level | Plain-language meaning |
+|---|---|
+| L1 | "We handed it over": the texture is submitted as an external resource and no explicit copy call appears in the counters |
+| L2 | "Every frame carries ID": texture identity and encoder-bind flags are verified at submission, proving the encoder received the captured texture itself |
+| L3 | "Dashcam": a system-wide ETW trace shows no full-frame GPU copy events in the reviewed window, hash-bound offline |
+| L4 | "Vendor stamp": extra visibility from vendor tools or qualifications |
+
+Honest boundary: MFT/driver internals are not observable by the runtime
+API, and no level proves private firmware work did not happen; evidence
+is scoped to the tested adapter/driver/OS/geometry tuple and must be
+remeasured elsewhere. Full definitions and tooling:
+[docs/copy-evidence-qualification.md](docs/copy-evidence-qualification.md).
+
 ## What it is
 
 - **Two CPU-side paths**: a stable C ABI (version 1) around a persistent
