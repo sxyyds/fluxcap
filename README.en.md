@@ -13,6 +13,13 @@ instead of marketing claims.
 
 Licensed under the [MIT License](LICENSE).
 
+## Project status
+
+FluxCap 0.1 was open-sourced as a complete initial drop: the development
+history before 0.1 was not backfilled into git and will not be rewritten.
+From 0.1 on, the project evolves in small, self-contained commits, with
+release scope recorded in [CHANGELOG.md](CHANGELOG.md).
+
 ## What it is
 
 - **Two CPU-side paths**: a stable C ABI (version 1) around a persistent
