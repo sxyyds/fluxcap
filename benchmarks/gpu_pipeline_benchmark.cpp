@@ -40,6 +40,8 @@ struct Options final {
     std::uint32_t media_fps = 240;
     std::uint32_t mailbox_size = 0;
     std::uint32_t post_crop_size = 0;
+    std::uint32_t window_width = 1'280;
+    std::uint32_t window_height = 720;
     bool show_help = false;
     bool source_only = false;
 };
@@ -49,6 +51,8 @@ struct WindowState final {
     std::atomic<HWND> window{nullptr};
     std::atomic<DWORD> error{ERROR_SUCCESS};
     std::atomic<std::uint32_t> phase{0};
+    std::uint32_t window_width = 1'280;
+    std::uint32_t window_height = 720;
 };
 
 class D3DWindowSource final {
@@ -170,11 +174,16 @@ struct PacketTimings final {
 
 class WindowThread final {
 public:
-    WindowThread() {
+    WindowThread(
+        std::uint32_t window_width = 1'280,
+        std::uint32_t window_height = 720)
+        : window_width_(window_width), window_height_(window_height) {
         state_.ready = CreateEventW(nullptr, TRUE, FALSE, nullptr);
         if (state_.ready == nullptr) {
             throw std::runtime_error("CreateEvent failed");
         }
+        state_.window_width = window_width_;
+        state_.window_height = window_height_;
         thread_ = std::thread(&WindowThread::run, &state_);
         if (WaitForSingleObject(state_.ready, 5'000) != WAIT_OBJECT_0) {
             stop();
@@ -230,7 +239,8 @@ private:
             return;
         }
 
-        RECT bounds{0, 0, 1280, 720};
+        RECT bounds{0, 0, static_cast<LONG>(state->window_width),
+                    static_cast<LONG>(state->window_height)};
         AdjustWindowRectEx(&bounds, WS_OVERLAPPEDWINDOW, FALSE, 0);
         HWND window = CreateWindowExW(
             0,
@@ -314,6 +324,8 @@ private:
     }
 
     WindowState state_{};
+    std::uint32_t window_width_ = 1'280;
+    std::uint32_t window_height_ = 720;
     std::thread thread_;
 };
 
@@ -382,12 +394,32 @@ Options parse_options(int argc, wchar_t* argv[]) {
             options.frames = parse_count(argument.substr(9), "--frames");
         } else if (argument.starts_with(L"--warmup=")) {
             options.warmup = parse_count(argument.substr(9), "--warmup");
+        } else if (argument == L"--window-width" || argument == L"--window-height") {
+            if (++index >= argc) {
+                throw std::invalid_argument("missing option value");
+            }
+            const auto value = static_cast<std::uint32_t>(parse_count(
+                argv[index],
+                argument == L"--window-width" ? "--window-width" : "--window-height"));
+            if (argument == L"--window-width") options.window_width = value;
+            else options.window_height = value;
+        } else if (argument.starts_with(L"--window-width=")) {
+            options.window_width = static_cast<std::uint32_t>(
+                parse_count(argument.substr(15), "--window-width"));
+        } else if (argument.starts_with(L"--window-height=")) {
+            options.window_height = static_cast<std::uint32_t>(
+                parse_count(argument.substr(16), "--window-height"));
         } else {
             throw std::invalid_argument("unknown option");
         }
     }
     if (options.frames == 0) {
         throw std::invalid_argument("--frames must be greater than zero");
+    }
+    if (options.window_width == 0 || options.window_height == 0
+        || (options.window_width & 1u) != 0 || (options.window_height & 1u) != 0) {
+        throw std::invalid_argument(
+            "--window-width/--window-height must be positive even values");
     }
     if (options.media_fps == 0 || options.media_fps > 1'000) {
         throw std::invalid_argument("--media-fps must be between 1 and 1000");
@@ -473,12 +505,13 @@ int wmain(int argc, wchar_t* argv[]) {
             std::cout
                 << "Usage: fluxcap_gpu_bench [--frames N] [--warmup N] "
                    "[--media-fps N] [--mailbox-size N|--post-crop-size N] "
-                   "[--source-only]\n";
+                   "[--window-width N] [--window-height N] [--source-only]\n";
             return 0;
         }
         SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
         winrt::init_apartment(winrt::apartment_type::multi_threaded);
-        WindowThread benchmark_window;
+        WindowThread benchmark_window(
+            options.window_width, options.window_height);
         if (options.source_only) {
             std::cout
                 << "FluxCap display-vsync D3D source is running; close its window to stop.\n";
