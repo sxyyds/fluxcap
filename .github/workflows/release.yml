@@ -46,7 +46,7 @@ jobs:
           # pdbs are produced next to the DLLs in the build tree
           Get-ChildItem build-shared\Release\*.pdb -ErrorAction SilentlyContinue |
             Copy-Item -Destination ${{ github.workspace }}\pkg\shared\bin
-          Copy-Item LICENSE CHANGELOG.md -Destination ${{ github.workspace }}\pkg\
+          Copy-Item LICENSE,CHANGELOG.md -Destination ${{ github.workspace }}\pkg\
           $tag = "${{ github.ref_name }}"
           Compress-Archive -Path ${{ github.workspace }}\pkg\* `
             -DestinationPath "${{ github.workspace }}\fluxcap-${tag}-win-x64.zip"
