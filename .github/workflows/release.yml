@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  windows-x64:
+    name: Windows x64 release build
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure static
+        run: >
+          cmake -S . -B build-static
+          -DCMAKE_BUILD_TYPE=Release
+          -DFLUXCAP_BUILD_EXAMPLES=ON
+          -DFLUXCAP_BUILD_BENCHMARKS=OFF
+          -DFLUXCAP_BUILD_TESTS=OFF
+
+      - name: Configure shared
+        run: >
+          cmake -S . -B build-shared
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_SHARED_LIBS=ON
+          -DFLUXCAP_BUILD_EXAMPLES=ON
+          -DFLUXCAP_BUILD_BENCHMARKS=OFF
+          -DFLUXCAP_BUILD_TESTS=OFF
+
+      - name: Build static
+        run: cmake --build build-static --config Release --parallel 2
+
+      - name: Build shared
+        run: cmake --build build-shared --config Release --parallel 2
+
+      - name: Install both into one package tree
+        shell: pwsh
+        run: |
+          cmake --install build-static --prefix ${{ github.workspace }}\pkg\static
+          cmake --install build-shared --prefix ${{ github.workspace }}\pkg\shared
+          # pdbs are produced next to the DLLs in the build tree
+          Get-ChildItem build-shared\Release\*.pdb -ErrorAction SilentlyContinue |
+            Copy-Item -Destination ${{ github.workspace }}\pkg\shared\bin
+          Copy-Item LICENSE CHANGELOG.md -Destination ${{ github.workspace }}\pkg\
+          $tag = "${{ github.ref_name }}"
+          Compress-Archive -Path ${{ github.workspace }}\pkg\* `
+            -DestinationPath "${{ github.workspace }}\fluxcap-${tag}-win-x64.zip"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fluxcap-win-x64
+          path: fluxcap-*.zip
+
+      - name: Attach to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: fluxcap-*.zip
+          generate_release_notes: true
