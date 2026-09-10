@@ -10,12 +10,14 @@ Live preview: `fluxcap_gpu_preview --window HWND` consumes the WGC GPU
 texture directly and shows source FPS. The GIF is a downscaled screen
 recording, not a quality reference for library output.
 
-Low-latency Windows screen capture as a C++20 library: Windows Graphics
-Capture (window/monitor) and DXGI Desktop Duplication (monitor), a
-GPU-only processing chain (ROI crop, scale, BGRA8/scRGB -> NV12/P010),
-hardware H.264/HEVC/AV1 encoding, and cross-process shared-texture
-broadcasting — with an evidence-based "zero redundant copy" discipline
-instead of marketing claims.
+Low-latency Windows screen capture / screen recording as a C++20
+library: Windows Graphics Capture (WGC) and DXGI Desktop Duplication on
+D3D11, a GPU-only zero-copy processing chain (ROI crop, scale,
+BGRA8/scRGB -> NV12/P010), hardware H.264/HEVC/AV1 encoding, and
+cross-process shared-texture broadcasting — with an evidence-based
+"zero redundant copy" discipline instead of marketing claims. How this
+compares to DXcam, windows-capture, and OBS:
+[docs/comparison.md](docs/comparison.md).
 
 Licensed under the [MIT License](LICENSE).
 

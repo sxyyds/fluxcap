@@ -8,7 +8,9 @@
 
 实时预览：`fluxcap_gpu_preview --window HWND` 直接消费 WGC GPU 纹理并显示源 FPS。动图为屏幕录制缩样，非库输出质量标尺。
 
-FluxCap 是面向 Windows 的 C++20 低延迟捕获库。它同时提供两条互补路径：
+FluxCap 是面向 Windows 的 C++20 低延迟 screen capture / screen recording 库：基于 D3D11 的 WGC（Windows Graphics Capture）与 DXGI Desktop Duplication 捕获，GPU zero-copy 直达硬件视频编码（H.264/HEVC/AV1），支持跨进程纹理共享。与其他捕获库的对比（DXcam、windows-capture、OBS）见 [docs/comparison.md](docs/comparison.md)。
+
+它同时提供两条互补路径：
 
 * CPU 路径：使用持久化 GDI/DIB 帧池捕获虚拟桌面或桌面 ROI，输出 CPU 可读的 BGRX8 像素，并提供稳定 C ABI 与仅头文件的 C++ RAII 包装。
 
