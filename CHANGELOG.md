@@ -59,3 +59,12 @@ commit 并记录在此文件中。版本号遵循 [Semantic Versioning](https://
 
 - 2026-09-09：删除三个 0 字节失败残留 qualification JSON
   （`amd-nv12-av1-smoke` / `p010-hevc-amd-smoke` / `p010-hevc-smoke`）。
+- 2026-09-10：README 双语新增项目状态、30 秒速览（绝对性能 TL;DR 与
+  L1-L4 大众化解释）、Hello World（截图存 PNG）与实时预览演示 GIF；
+  补搜索关键词与 `docs/comparison.md` 对比矩阵。
+- 2026-09-10：新增本 CHANGELOG；新增 `docs/benchmarks-20260909-rx5060.md`
+  （RTX 5060 Laptop 绝对基准：GDI 全桌面 46.7 FPS、WGC→H.264
+  submit→packet P50 1.6 ms、4K 合成饱和与三 codec bus 数字）；GPU
+  pipeline benchmark 支持任意测试窗口几何。
+- 2026-09-10：新增 tag 触发的 release workflow（x64 静态+共享打包 zip
+  附到 GitHub Release）与 vcpkg port 草稿（`packaging/vcpkg/`）。
