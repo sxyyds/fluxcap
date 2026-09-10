@@ -1,9 +1,5 @@
-# vcpkg port for FluxCap. Copy this directory to <vcpkg>/ports/fluxcap or use
-# it directly with --overlay-ports=packaging/vcpkg.
-#
-# REF/SHA512 below pin the upstream tag. Update them when a new tag is cut:
-#   vcpkg install fluxcap --overlay-ports=packaging/vcpkg
-# prints the expected SHA512 on mismatch; paste it here.
+# FluxCap vcpkg portfile. REF/SHA512 pin the release tarball; update both
+# together when a new tag is cut (the expected SHA512 is printed on mismatch).
 
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
