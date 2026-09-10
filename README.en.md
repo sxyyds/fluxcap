@@ -4,6 +4,12 @@
 
 [中文文档](README.md) | **English**
 
+![FluxCap GPU preview example](docs/assets/demo.gif)
+
+Live preview: `fluxcap_gpu_preview --window HWND` consumes the WGC GPU
+texture directly and shows source FPS. The GIF is a downscaled screen
+recording, not a quality reference for library output.
+
 Low-latency Windows screen capture as a C++20 library: Windows Graphics
 Capture (window/monitor) and DXGI Desktop Duplication (monitor), a
 GPU-only processing chain (ROI crop, scale, BGRA8/scRGB -> NV12/P010),
@@ -12,6 +18,38 @@ broadcasting — with an evidence-based "zero redundant copy" discipline
 instead of marketing claims.
 
 Licensed under the [MIT License](LICENSE).
+
+## Hello World: one screenshot to PNG
+
+```cpp
+#include <fluxcap/gpu.hpp>
+#include <winrt/base.h>
+#include <windows.h>
+
+namespace gpu = fluxcap::gpu;
+
+int main() {
+    winrt::init_apartment(winrt::apartment_type::multi_threaded);
+
+    gpu::WgcCapture capture;
+    auto created = gpu::WgcCapture::create_for_monitor(
+        MonitorFromPoint({0, 0}, MONITOR_DEFAULTTOPRIMARY),
+        nullptr, gpu::WgcCaptureOptions{}, capture);
+    if (!created || !(created = capture.start())) return 1;
+
+    gpu::WgcFrameLease frame;
+    if (!capture.acquire_latest(1000, frame)) return 1;
+
+    gpu::WicImageEncoder png;
+    if (!png.initialize(capture.device())) return 1;
+    return png.encode_texture_to_file_sync(frame.texture(), L"screenshot.png")
+        ? 0 : 1;
+}
+```
+
+Link against `fluxcap_gpu` (the CMake target handles its system
+dependencies). The CPU-side equivalent is `examples/grab.cpp` plus the
+stable C ABI.
 
 ## Project status
 

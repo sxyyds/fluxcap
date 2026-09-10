@@ -4,6 +4,10 @@
 
 **中文** | [English](README.en.md)
 
+![FluxCap GPU 预览示例](docs/assets/demo.gif)
+
+实时预览：`fluxcap_gpu_preview --window HWND` 直接消费 WGC GPU 纹理并显示源 FPS。动图为屏幕录制缩样，非库输出质量标尺。
+
 FluxCap 是面向 Windows 的 C++20 低延迟捕获库。它同时提供两条互补路径：
 
 * CPU 路径：使用持久化 GDI/DIB 帧池捕获虚拟桌面或桌面 ROI，输出 CPU 可读的 BGRX8 像素，并提供稳定 C ABI 与仅头文件的 C++ RAII 包装。
@@ -11,6 +15,36 @@ FluxCap 是面向 Windows 的 C++20 低延迟捕获库。它同时提供两条�
 * GPU 路径：使用 Windows.Graphics.Capture（WGC）捕获窗口或显示器，或使用 Desktop Duplication 捕获显示器，直接处理 `ID3D11Texture2D`；同一 GPU 设备上可继续完成中心 ROI 裁切、缩放、BGRA8/scRGB FP16 到 NV12/P010 转换、硬件视频编码和跨进程纹理共享。
 
 GPU 路径已覆盖遮挡和离屏窗口捕获。仓库中的真实 GPU 测试会创建一个红色目标窗口，用蓝色顶层窗口完全遮挡并验证捕获纹理仍是红色；随后把目标完全移出虚拟桌面，在离屏状态重新建立 WGC session，并再次验证其现有 GPU surface。
+
+## Hello World：截一张图存成 PNG
+
+```cpp
+#include <fluxcap/gpu.hpp>
+#include <winrt/base.h>
+#include <windows.h>
+
+namespace gpu = fluxcap::gpu;
+
+int main() {
+    winrt::init_apartment(winrt::apartment_type::multi_threaded);
+
+    gpu::WgcCapture capture;
+    auto created = gpu::WgcCapture::create_for_monitor(
+        MonitorFromPoint({0, 0}, MONITOR_DEFAULTTOPRIMARY),
+        nullptr, gpu::WgcCaptureOptions{}, capture);
+    if (!created || !(created = capture.start())) return 1;
+
+    gpu::WgcFrameLease frame;
+    if (!capture.acquire_latest(1000, frame)) return 1;
+
+    gpu::WicImageEncoder png;
+    if (!png.initialize(capture.device())) return 1;
+    return png.encode_texture_to_file_sync(frame.texture(), L"screenshot.png")
+        ? 0 : 1;
+}
+```
+
+链接 `fluxcap_gpu` 及其系统依赖（d3d11/dxgi/dwmapi/gdi32/mf/mfplat/mfuuid/ole32/user32/windowsapp/windowscodecs/wtsapi32，CMake 目标已自动处理）。CPU 路径的等价入口见 `examples/grab.cpp` 与 [C ABI](#cpu-api)。
 
 ## 项目状态
 
